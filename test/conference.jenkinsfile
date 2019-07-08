@@ -18,7 +18,7 @@ pipeline {
   }
     stages {
         stage('Unit test') {
-            options { timeout(time:10,unit:'MINUTES') }
+           
             steps {
                 podTemplate(name: 'unit-test', label: 'unit-test', cloud: 'kubernetes', containers: [
                     containerTemplate(name: 'unit-test', image: "$env.TEST_IMAGE",  ttyEnabled: true, alwaysPullImage: true, privileged: true, resourceRequestCpu: '500m', resourceLimitCpu: '1000m',resourceLimitMemory: '1.0Gi',resourceRequestMemory: '0.5Gi', network: 'host', command: 'cat')
@@ -32,7 +32,7 @@ pipeline {
             }
         }
         stage('Build package') {
-            options { timeout(time:10,unit:'MINUTES') }
+            
             steps {
                 podTemplate(name: 'pack', label: 'pack-mcu', containers: [
                     containerTemplate(name: 'pack-on-centos', image: "$env.JS_IMAGE_DEBUG",  ttyEnabled: true, alwaysPullImage: true, privileged: true, resourceRequestCpu: '1000m', resourceLimitCpu: '1500m', resourceLimitMemory: '1.5Gi',resourceRequestMemory: '1.0Gi', network: 'host', command: 'cat')
@@ -48,7 +48,7 @@ pipeline {
 
 
  stage('Start test') {
-            options { timeout(time:40,unit:'MINUTES') }
+           
             parallel {
                 stage('API test') {
                     steps {
