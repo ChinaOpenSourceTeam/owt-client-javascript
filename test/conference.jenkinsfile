@@ -1,4 +1,4 @@
-void setBuildStatus(String message, String state) {
+oid setBuildStatus(String message, String state) {
   step([
       $class: "GitHubCommitStatusSetter",
       reposSource: [$class: "ManuallyEnteredRepositorySource", url: "${REPO_URL}/owt-client-javascript"],
@@ -39,6 +39,7 @@ pipeline {
             }
         }
 
+
         stage('Start test') {
             parallel {
                 stage('API test') {
@@ -46,7 +47,7 @@ pipeline {
                         podTemplate(name: 'api-test', label: 'api-test', cloud: 'kubernetes', containers: [
                             containerTemplate(name: 'api-test', image: "$env.TEST_IMAGE",  ttyEnabled: true, alwaysPullImage: true, privileged: true, resourceRequestCpu: '3000m', resourceLimitCpu: '4000m', network: 'host', command: 'cat'),
                             ]) {
-                        
+
                             node('api-test') {
                               container('api-test') {
                                    sh "/root/start.sh ${env.GIT_COMMIT}1 ConferenceClient_api"
@@ -61,7 +62,7 @@ pipeline {
                         podTemplate(name:'subscribe-test', label: 'subscribe-test', cloud: 'kubernetes', containers: [
                             containerTemplate(name: 'subscribe-test', image: "$env.TEST_IMAGE",  ttyEnabled: true, alwaysPullImage: true, privileged: true, resourceRequestCpu: '3000m', resourceLimitCpu: '4000m', network: 'host', command: 'cat'),
                             ]) {
-                        
+
                             node('subscribe-test') {
                               container('subscribe-test') {
                                   sh "/root/start.sh ${env.GIT_COMMIT}2 ConferenceClient_subscribe"
