@@ -52,7 +52,7 @@ pipeline {
                 stage('API test') {
                     steps {
                         podTemplate(name: 'api-test', label: 'api-test', cloud: 'kubernetes', containers: [
-                            containerTemplate(name: 'api-test', image: "$env.TEST_IMAGE",  ttyEnabled: true, alwaysPullImage: true, privileged: true, resourceRequestCpu: '3000m', resourceLimitCpu: '4000m',resourceLimitMemory: '7.0Gi',resourceRequestMemory: '6.0Gi', network: 'host', command: 'cat'),
+                            containerTemplate(name: 'api-test', image: "$env.TEST_IMAGE",  ttyEnabled: true, alwaysPullImage: true, privileged: true, resourceRequestCpu: '7000m', resourceLimitCpu: '8000m',resourceLimitMemory: '7.0Gi',resourceRequestMemory: '6.0Gi', network: 'host', command: 'cat'),
                             ]) {
                         
                             node('api-test') {
@@ -67,7 +67,7 @@ pipeline {
                 stage('Subscribe test') {
                     steps {
                         podTemplate(name:'subscribe-test', label: 'subscribe-test', cloud: 'kubernetes', containers: [
-                            containerTemplate(name: 'subscribe-test', image: "$env.TEST_IMAGE",  ttyEnabled: true, alwaysPullImage: true, privileged: true, resourceRequestCpu: '3000m', resourceLimitCpu: '4000m', resourceLimitMemory: '7.0Gi',resourceRequestMemory: '6.0Gi',network: 'host', command: 'cat'),
+                            containerTemplate(name: 'subscribe-test', image: "$env.TEST_IMAGE",  ttyEnabled: true, alwaysPullImage: true, privileged: true, resourceRequestCpu: '7000m', resourceLimitCpu: '8000m', resourceLimitMemory: '7.0Gi',resourceRequestMemory: '6.0Gi',network: 'host', command: 'cat'),
                             ]) {
                         
                             node('subscribe-test') {
