@@ -51,7 +51,7 @@ pipeline {
             parallel {
                 stage('API test') {
                     steps {
-                        podTemplate(name: 'api-test', label: 'api-test', cloud: 'kubernetes', containers: [
+                        podTemplate(name: 'api-test', label: 'api-test', cloud: 'kubernetes',nodeSelector: 'slave=webrtc-37', containers: [
                             containerTemplate(name: 'api-test', image: "$env.TEST_IMAGE",  ttyEnabled: true, alwaysPullImage: true, privileged: true, resourceRequestCpu: '8000m', resourceLimitCpu: '9000m',resourceLimitMemory: '10.0Gi',resourceRequestMemory: '9.0Gi', network: 'host', command: 'cat'),
                             ]) {
                         
@@ -66,7 +66,7 @@ pipeline {
 
                 stage('Subscribe test') {
                     steps {
-                        podTemplate(name:'subscribe-test', label: 'subscribe-test', cloud: 'kubernetes', containers: [
+                        podTemplate(name:'subscribe-test', label: 'subscribe-test', cloud: 'kubernetes',nodeSelector: 'slave=webrtc-155',  containers: [
                             containerTemplate(name: 'subscribe-test', image: "$env.TEST_IMAGE",  ttyEnabled: true, alwaysPullImage: true, privileged: true, resourceRequestCpu: '8000m', resourceLimitCpu: '9000m', resourceLimitMemory: '10.0Gi',resourceRequestMemory: '9.0Gi',network: 'host', command: 'cat'),
                             ]) {
                         
