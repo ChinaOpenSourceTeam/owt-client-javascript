@@ -1,4 +1,4 @@
-void setBuildStatus(String message, String state) {
+containers: [void setBuildStatus(String message, String state) {
   step([
       $class: "GitHubCommitStatusSetter",
       reposSource: [$class: "ManuallyEnteredRepositorySource", url: "${REPO_URL}/owt-client-javascript"],
@@ -51,8 +51,7 @@ pipeline {
             options { timeout(time:40,unit:'MINUTES') }
             parallel {
                 stage('API test') {
-                    steps {containers: [
-
+                    steps {
                         podTemplate(name: 'api-test', label: 'api-test', cloud: 'kubernetes',containers: [
                             containerTemplate(name: 'api-test', image: "$env.TEST_IMAGE",  ttyEnabled: true, alwaysPullImage: true, privileged: true, resourceRequestCpu: '8000m', resourceLimitCpu: '9000m',resourceLimitMemory: '10.0Gi',resourceRequestMemory: '9.0Gi', network: 'host', command: 'cat'),
                             ]) {
